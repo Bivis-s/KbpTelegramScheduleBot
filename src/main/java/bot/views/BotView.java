@@ -1,6 +1,7 @@
 package bot.views;
 
 import bot.db.objects.Note;
+import bot.db.objects.NotifyTime;
 import bot.db.objects.TelegramUser;
 import bot.values.Commands;
 import by.bivis.kbp.parser.objects.News;
@@ -176,7 +177,8 @@ public class BotView implements ScheduleBotView<TelegramUser, News, Schedule, So
 
     @Override
     public void sendUserHasNoSubscriptionsMessage(TelegramUser user) {
-        sendMessage(user, "Ваши подписки пусты", createStandardReplyMarkup());
+        sendMessage(user, "Ваши подписки пусты, отправьте " + Commands.SUBSCRIBE + " чтобы подписаться",
+                createStandardReplyMarkup());
     }
 
     private ReplyKeyboardMarkup createNotesReplyMarkup() {
@@ -203,5 +205,36 @@ public class BotView implements ScheduleBotView<TelegramUser, News, Schedule, So
     @Override
     public void sendNoteWasAddedMessage(TelegramUser user) {
         sendMessage(user, "Заметка добавлена \n-----\n Отправляйте заметки сообщениями и я их сохраню", createNotesReplyMarkup());
+    }
+
+    @Override
+    public void sendSetNotifyMessage(TelegramUser user) {
+        sendMessage(user, "Выберите время, в которое хотите получить расписание", createReplyKeyboardMarkup(3,
+                Arrays.asList(NotifyTime.EARLY.getValue(), NotifyTime.MEDIUM.getValue(), NotifyTime.LATE.getValue())));
+    }
+
+    @Override
+    public void sendNotifySuccessfullySetMessage(TelegramUser user) {
+        sendMessage(user, "Рассылка установлена", createStandardReplyMarkup());
+    }
+
+    @Override
+    public void sendThereIsAlreadySuchNotificationMessage(TelegramUser user) {
+        sendMessage(user, "Вы уже подписаны на это",
+                createReplyKeyboardMarkup(1, Collections.singletonList(Commands.NOTIFY_ADD)));
+    }
+
+    @Override
+    public void sendNotifyManageMessage(TelegramUser user, List<String> userNotifies) {
+        sendMessage(user, createNotifyMessageText(userNotifies) + "\nУправление рассылкой\n" +
+                        Commands.NOTIFY_ADD + " - добавить рассылку\n" +
+                        Commands.NOTIFY_CLEAR + " - очистить рассылки\n",
+                createReplyKeyboardMarkup(2, Arrays.asList(Commands.NOTIFY_ADD, Commands.NOTIFY_CLEAR)));
+    }
+
+    @Override
+    public void sendClearNotesMessage(TelegramUser user) {
+        sendMessage(user, "Рассылки очищены", createReplyKeyboardMarkup(1,
+                Collections.singletonList(Commands.NOTIFY_ADD)));
     }
 }

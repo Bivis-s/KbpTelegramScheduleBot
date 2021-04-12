@@ -1,6 +1,7 @@
 package bot.db.hibernate_factory;
 
 import bot.db.objects.Note;
+import bot.db.objects.Notify;
 import bot.db.objects.Subscription;
 import bot.db.objects.TelegramUser;
 import by.bivis.kbp.parser.objects.News;
@@ -26,7 +27,8 @@ public class HibernateAnnotatedClasses {
             News.class,
             Source.class,
             Subscription.class,
-            Note.class
+            Note.class,
+            Notify.class
     );
 
     private HibernateAnnotatedClasses() {

@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -27,8 +26,8 @@ public class TelegramUser {
     @Column(name = "lastname")
     private String lastname;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "state")
+    @Enumerated(EnumType.STRING)
     private UserState state;
 
     @Column(name = "selected_source_category")
@@ -36,6 +35,9 @@ public class TelegramUser {
 
     @Column(name = "selected_source_subcategory")
     private String selectedSourceSubcategory;
+
+    @Column(name = "notify_time")
+    private String notifyTime;
 
     @Override
     public String toString() {

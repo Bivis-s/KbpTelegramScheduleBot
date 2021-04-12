@@ -1,6 +1,7 @@
 package bot.db.daos;
 
 import bot.db.objects.Note;
+import bot.db.objects.Notify;
 import bot.db.objects.Subscription;
 import bot.db.objects.TelegramUser;
 import by.bivis.kbp.parser.objects.Source;
@@ -19,6 +20,7 @@ public class TelegramUserDao extends BaseDaoImpl<TelegramUser> implements UserDa
     private SubscriptionDao subscriptionDao;
     private KbpSourceDao sourceDao;
     private NoteDao noteDao;
+    private NotifyDao notifyDao;
 
     @Override
     protected Class<TelegramUser> getGenericClass() {
@@ -80,6 +82,19 @@ public class TelegramUserDao extends BaseDaoImpl<TelegramUser> implements UserDa
     }
 
     @Override
+    public boolean isThereNotification(long userId, String notifyTime, Source source) {
+        List<Notify> notifies = notifyDao.getAll();
+        for (Notify notify : notifies) {
+            if (notify.getUserId() == userId &&
+                    notify.getSourceId() == source.getId() &&
+                    notify.getNotifyTime().equals(notifyTime)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public List<Note> getNotes(long userId) {
         List<Note> notes = new ArrayList<>();
         for (Note note : getNoteDao().getAll()) {
@@ -100,5 +115,34 @@ public class TelegramUserDao extends BaseDaoImpl<TelegramUser> implements UserDa
     @Override
     public void addNoteToUser(Note note) {
         getNoteDao().save(note);
+    }
+
+    @Override
+    public void addNotifyToUser(long userId, String notifyTime, Source source) {
+        Notify notify = new Notify();
+        notify.setNotifyTime(notifyTime);
+        notify.setUserId(userId);
+        notify.setSourceId(source.getId());
+        getNotifyDao().save(notify);
+    }
+
+    @Override
+    public List<String> getUserNotifies(long userId) {
+        List<String> notifies = new ArrayList<>();
+        for (Notify notify : notifyDao.getAll()) {
+            if (notify.getUserId() == userId) {
+                notifies.add(notify.getNotifyTime() + " | " + getSourceDao().get(notify.getSourceId()).getValue());
+            }
+        }
+        return notifies;
+    }
+
+    @Override
+    public void clearNotifies(long userId) {
+        for (Notify notify : notifyDao.getAll()) {
+            if (notify.getUserId() == userId) {
+                notifyDao.delete(notify);
+            }
+        }
     }
 }

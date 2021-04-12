@@ -59,6 +59,16 @@ public class TelegramBotController extends ScheduleBotController<TelegramUser, N
                 getModel().getUserDao().cleanNotes(getModel().getUserId(user));
                 getModel().sendDeleteNotesToView(user);
                 break;
+            case Commands.NOTIFY:
+                getModel().sendNotifyManageMessageToView(user);
+                break;
+            case Commands.NOTIFY_ADD:
+                getModel().sendSetNotifyMessageToView(user);
+                break;
+            case Commands.NOTIFY_CLEAR:
+                getModel().getUserDao().clearNotifies(getModel().getUserId(user));
+                getModel().sendClearNotesMessageToView(user);
+                break;
             default:
                 handleCommandByUserState(user, command);
         }
@@ -104,6 +114,12 @@ public class TelegramBotController extends ScheduleBotController<TelegramUser, N
                 break;
             case NOTES:
                 getModel().addNoteToUser(user, command);
+                break;
+            case NOTIFY:
+                getModel().sendSubscriptionsToSetNotifyTiView(user, command);
+                break;
+            case PICK_SIGNED_SOURCE_TO_NOTIFY:
+                getModel().setNotifyToUser(user, user.getNotifyTime(), command);
                 break;
             default:
                 break;

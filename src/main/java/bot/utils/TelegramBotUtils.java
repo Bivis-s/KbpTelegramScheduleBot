@@ -80,4 +80,15 @@ public class TelegramBotUtils {
         }
         return sb.toString();
     }
+
+    public static String createNotifyMessageText(List<String> notifies) {
+        StringBuilder sb = new StringBuilder();
+        if (notifies.size() > 0) {
+            sb.append("Установленные рассылки:\n");
+        }
+        for (String notify : notifies) {
+            sb.append(notify).append("\n");
+        }
+        return sb.toString();
+    }
 }

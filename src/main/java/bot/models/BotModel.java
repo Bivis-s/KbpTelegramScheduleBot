@@ -48,6 +48,12 @@ public class BotModel extends ScheduleBotModel<TelegramUser, News, Source, Sched
     }
 
     @Override
+    protected TelegramUser setNotifyTimeToUser(TelegramUser user, String notifyTime) {
+        user.setNotifyTime(notifyTime);
+        return user;
+    }
+
+    @Override
     protected Note createNoteFromText(TelegramUser user, String noteText) {
         Note note = new Note();
         note.setUserId(user.getId());

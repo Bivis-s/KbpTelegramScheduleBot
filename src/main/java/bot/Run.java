@@ -35,6 +35,7 @@ public class Run {
         userDao.setSubscriptionDao(subscriptionDao);
         userDao.setSourceDao(sourceDao);
         userDao.setNoteDao(new NoteDao());
+        userDao.setNotifyDao(new NotifyDao());
 
         sourceDao.setSubscriptionDao(subscriptionDao);
 
