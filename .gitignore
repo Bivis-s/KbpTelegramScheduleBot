@@ -1,2 +1,7 @@
 # Project exclude paths
 /target/
+/KbpTelegramScheduleBot.iml
+/src/main/java/bot/secure/
+/.idea/
+/ScheduleBotModel-0.0.1.jar
+/src/test/
