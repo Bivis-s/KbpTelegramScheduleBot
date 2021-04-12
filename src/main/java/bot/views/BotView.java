@@ -1,6 +1,7 @@
 package bot.views;
 
-import bot.db.user.TelegramUser;
+import bot.db.objects.Note;
+import bot.db.objects.TelegramUser;
 import bot.values.Commands;
 import by.bivis.kbp.parser.objects.News;
 import by.bivis.kbp.parser.objects.Source;
@@ -13,21 +14,17 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static bot.utils.KeyboardGenerator.createReplyKeyboardMarkup;
 import static bot.utils.ScheduleFormatter.formatExtendedSchedule;
 import static bot.utils.ScheduleFormatter.formatTodayAndTomorrowSchedule;
-import static bot.utils.TelegramBotUtils.createMessage;
-import static bot.utils.TelegramBotUtils.createNewsMediaGroup;
+import static bot.utils.TelegramBotUtils.*;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class BotView implements ScheduleBotView<TelegramUser, News, Schedule, Source> {
+public class BotView implements ScheduleBotView<TelegramUser, News, Schedule, Source, Note> {
     private TelegramLongPollingBot bot;
 
     public void sendMessage(TelegramUser user, String message) {
@@ -180,5 +177,31 @@ public class BotView implements ScheduleBotView<TelegramUser, News, Schedule, So
     @Override
     public void sendUserHasNoSubscriptionsMessage(TelegramUser user) {
         sendMessage(user, "Ваши подписки пусты", createStandardReplyMarkup());
+    }
+
+    private ReplyKeyboardMarkup createNotesReplyMarkup() {
+        return createReplyKeyboardMarkup(1,
+                Arrays.asList(Commands.NOTES, Commands.NOTES_CLEAR));
+    }
+
+    @Override
+    public void sendNotes(TelegramUser user, List<Note> notes) {
+        sendMessage(user,  createNotesMessageText(notes) + "-----\n Отправляйте заметки сообщениями и я их сохраню", createNotesReplyMarkup());
+    }
+
+    @Override
+    public void sendEmptyNotesMessage(TelegramUser user) {
+        sendMessage(user, "Заметки пусты \n-----\n Отправляйте заметки сообщениями и я их сохраню", createNotesReplyMarkup());
+    }
+
+    @Override
+    public void sendDeleteNotes(TelegramUser user) {
+        sendMessage(user, "Заметки очищены", createReplyKeyboardMarkup(1,
+                Collections.singletonList(Commands.NOTES)));
+    }
+
+    @Override
+    public void sendNoteWasAddedMessage(TelegramUser user) {
+        sendMessage(user, "Заметка добавлена \n-----\n Отправляйте заметки сообщениями и я их сохраню", createNotesReplyMarkup());
     }
 }

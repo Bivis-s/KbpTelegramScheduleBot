@@ -15,4 +15,5 @@ public class Commands {
     public static final String NOTIFY = "/notify";
     public static final String NEWS = "/news";
     public static final String NOTES = "/notes";
+    public static final String NOTES_CLEAR = "/clear";
 }

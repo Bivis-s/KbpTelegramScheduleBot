@@ -1,7 +1,8 @@
 package bot.db.daos;
 
-import bot.db.subscription.Subscription;
-import bot.db.user.TelegramUser;
+import bot.db.objects.Note;
+import bot.db.objects.Subscription;
+import bot.db.objects.TelegramUser;
 import by.bivis.kbp.parser.objects.Source;
 import by.bivis.schedule_bot_model.objects.db_objects.SourceDao;
 import by.bivis.schedule_bot_model.objects.db_objects.UserDao;
@@ -17,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SubscriptionDao extends BaseDaoImpl<Subscription> {
     private SourceDao<Source> sourceDao;
-    private UserDao<TelegramUser, Source> userDao;
+    private UserDao<TelegramUser, Source, Note> userDao;
 
     @Override
     protected Class<Subscription> getGenericClass() {

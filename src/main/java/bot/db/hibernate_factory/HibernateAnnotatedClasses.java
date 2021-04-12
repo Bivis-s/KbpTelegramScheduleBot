@@ -1,7 +1,8 @@
 package bot.db.hibernate_factory;
 
-import bot.db.subscription.Subscription;
-import bot.db.user.TelegramUser;
+import bot.db.objects.Note;
+import bot.db.objects.Subscription;
+import bot.db.objects.TelegramUser;
 import by.bivis.kbp.parser.objects.News;
 import by.bivis.kbp.parser.objects.Source;
 import by.bivis.kbp.parser.objects.schedule.Schedule;
@@ -24,7 +25,8 @@ public class HibernateAnnotatedClasses {
             ScheduleLesson.class,
             News.class,
             Source.class,
-            Subscription.class
+            Subscription.class,
+            Note.class
     );
 
     private HibernateAnnotatedClasses() {

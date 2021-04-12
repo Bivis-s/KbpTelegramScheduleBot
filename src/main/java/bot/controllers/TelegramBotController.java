@@ -1,6 +1,7 @@
 package bot.controllers;
 
-import bot.db.user.TelegramUser;
+import bot.db.objects.Note;
+import bot.db.objects.TelegramUser;
 import bot.values.Commands;
 import by.bivis.kbp.parser.objects.News;
 import by.bivis.kbp.parser.objects.Source;
@@ -12,9 +13,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TelegramBotController extends ScheduleBotController<TelegramUser, News, Source, Schedule> {
+public class TelegramBotController extends ScheduleBotController<TelegramUser, News, Source, Schedule, Note> {
 
-    public TelegramBotController(ScheduleBotModel<TelegramUser, News, Source, Schedule> model) {
+    public TelegramBotController(ScheduleBotModel<TelegramUser, News, Source, Schedule, Note> model) {
         super(model);
     }
 
@@ -50,6 +51,13 @@ public class TelegramBotController extends ScheduleBotController<TelegramUser, N
             case Commands.SEE:
                 getModel().sendParsingInProcessMessageToView(user);
                 getModel().sendSourceCategoriesToSeeWithoutSubscriptionToView(user);
+                break;
+            case Commands.NOTES:
+                getModel().sendNotesToView(user);
+                break;
+            case Commands.NOTES_CLEAR:
+                getModel().getUserDao().cleanNotes(getModel().getUserId(user));
+                getModel().sendDeleteNotesToView(user);
                 break;
             default:
                 handleCommandByUserState(user, command);
@@ -93,6 +101,9 @@ public class TelegramBotController extends ScheduleBotController<TelegramUser, N
                 break;
             case PICK_SIGNED_SOURCE_TO_REMOVE:
                 getModel().removeSubscriptionFromUser(user, command);
+                break;
+            case NOTES:
+                getModel().addNoteToUser(user, command);
                 break;
             default:
                 break;

@@ -1,4 +1,4 @@
-package bot.db.user;
+package bot.db.objects;
 
 import by.bivis.schedule_bot_model.enums.UserState;
 import lombok.EqualsAndHashCode;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "users")

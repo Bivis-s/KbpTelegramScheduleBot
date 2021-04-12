@@ -1,8 +1,7 @@
-package bot.db.subscription;
+package bot.db.objects;
 
 import bot.db.daos.KbpSourceDao;
 import bot.db.daos.TelegramUserDao;
-import bot.db.user.TelegramUser;
 import by.bivis.kbp.parser.objects.Source;
 import lombok.*;
 

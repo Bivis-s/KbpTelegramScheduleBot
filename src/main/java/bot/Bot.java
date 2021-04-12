@@ -1,6 +1,7 @@
 package bot;
 
-import bot.db.user.TelegramUser;
+import bot.db.objects.Note;
+import bot.db.objects.TelegramUser;
 import bot.secure.Values;
 import by.bivis.kbp.parser.objects.News;
 import by.bivis.kbp.parser.objects.Source;
@@ -15,7 +16,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 @Getter
 @Setter
 public class Bot extends TelegramLongPollingBot {
-    private ScheduleBotController<TelegramUser, News, Source, Schedule> controller;
+    private ScheduleBotController<TelegramUser, News, Source, Schedule, Note> controller;
 
     @Override
     public String getBotUsername() {

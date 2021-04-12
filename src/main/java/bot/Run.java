@@ -34,6 +34,7 @@ public class Run {
         TelegramUserDao userDao = new TelegramUserDao();
         userDao.setSubscriptionDao(subscriptionDao);
         userDao.setSourceDao(sourceDao);
+        userDao.setNoteDao(new NoteDao());
 
         sourceDao.setSubscriptionDao(subscriptionDao);
 

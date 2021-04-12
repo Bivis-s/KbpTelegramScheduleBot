@@ -1,6 +1,6 @@
 package bot.db.daos;
 
-import bot.db.subscription.Subscription;
+import bot.db.objects.Subscription;
 import bot.parser.KbpDbLinkedParser;
 import by.bivis.kbp.parser.objects.Source;
 import by.bivis.schedule_bot_model.errors.SourceWasntFoundError;

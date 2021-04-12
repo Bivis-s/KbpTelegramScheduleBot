@@ -1,6 +1,7 @@
 package bot.models;
 
-import bot.db.user.TelegramUser;
+import bot.db.objects.Note;
+import bot.db.objects.TelegramUser;
 import by.bivis.kbp.parser.objects.News;
 import by.bivis.kbp.parser.objects.Source;
 import by.bivis.kbp.parser.objects.schedule.Schedule;
@@ -9,7 +10,7 @@ import by.bivis.schedule_bot_model.models.ScheduleBotModel;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class BotModel extends ScheduleBotModel<TelegramUser, News, Source, Schedule> {
+public class BotModel extends ScheduleBotModel<TelegramUser, News, Source, Schedule, Note> {
 
     @Override
     public TelegramUser setStateToUser(TelegramUser user, UserState state) {
@@ -44,5 +45,13 @@ public class BotModel extends ScheduleBotModel<TelegramUser, News, Source, Sched
         user.setSelectedSourceCategory(null);
         user.setSelectedSourceSubcategory(null);
         return user;
+    }
+
+    @Override
+    protected Note createNoteFromText(TelegramUser user, String noteText) {
+        Note note = new Note();
+        note.setUserId(user.getId());
+        note.setValue(noteText);
+        return note;
     }
 }

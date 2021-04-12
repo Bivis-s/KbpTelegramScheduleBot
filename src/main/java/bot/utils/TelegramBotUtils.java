@@ -1,5 +1,6 @@
 package bot.utils;
 
+import bot.db.objects.Note;
 import by.bivis.kbp.parser.objects.News;
 import lombok.extern.log4j.Log4j2;
 import org.telegram.telegrambots.meta.api.methods.ParseMode;
@@ -70,5 +71,13 @@ public class TelegramBotUtils {
         SendMessage sendMessage = createMessage(chatId, text);
         sendMessage.setReplyMarkup(replyMarkup);
         return sendMessage;
+    }
+
+    public static String createNotesMessageText(List<Note> notes) {
+        StringBuilder sb = new StringBuilder();
+        for (Note note : notes) {
+            sb.append(note.getValue()).append("\n\n");
+        }
+        return sb.toString();
     }
 }

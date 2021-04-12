@@ -61,18 +61,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 
     @Override
     public void update(T entity) {
-        Session session = null;
-        try {
-            session = getSessionFactory().openSession();
+        try (Session session = getSessionFactory().openSession()) {
             Transaction tx = session.beginTransaction();
             session.update(entity);
             tx.commit();
         } catch (Throwable throwable) {
             throwable.printStackTrace();
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
         }
     }
 
