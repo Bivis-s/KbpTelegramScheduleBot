@@ -10,7 +10,7 @@ import by.bivis.schedule_bot_model.models.ScheduleBotModel;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class BotModel extends ScheduleBotModel<TelegramUser, News, Source, Schedule, Note> {
+public class TelegramBotModel extends ScheduleBotModel<TelegramUser, News, Source, Schedule, Note> {
 
     @Override
     public TelegramUser setStateToUser(TelegramUser user, UserState state) {

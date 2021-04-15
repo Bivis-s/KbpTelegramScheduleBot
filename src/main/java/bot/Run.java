@@ -2,7 +2,7 @@ package bot;
 
 import bot.controllers.TelegramBotController;
 import bot.db.daos.*;
-import bot.models.BotModel;
+import bot.models.TelegramBotModel;
 import bot.parser.BotParser;
 import bot.parser.KbpDbLinkedParser;
 import bot.views.BotView;
@@ -45,7 +45,7 @@ public class Run {
         BotParser parser = new BotParser();
         parser.setParser(linkedParser);
 
-        BotModel model = new BotModel();
+        TelegramBotModel model = new TelegramBotModel();
         model.setNewsDao(newsDao);
         model.setSourceDao(sourceDao);
         model.setScheduleDao(scheduleDao);
@@ -57,6 +57,7 @@ public class Run {
 
         telegramBot.setController(controller);
         TelegramKbpScheduleBot scheduleBot = new TelegramKbpScheduleBot(controller, telegramBot);
+        scheduleBot.setNotifyDao(new NotifyDao());
         scheduleBot.run();
     }
 }
