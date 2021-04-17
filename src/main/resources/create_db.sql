@@ -4,9 +4,10 @@ drop table lessons;
 drop table cells;
 drop table columns;
 drop table schedules;
--- for telegram
 drop table users;
 drop table subscriptions;
+drop table notes;
+drop table notify;
 
 create table news
 (
@@ -69,7 +70,8 @@ create table users
     lastname                    text,
     state                       text,
     selected_source_category    text,
-    selected_source_subcategory text
+    selected_source_subcategory text,
+    notify_time                 text
 );
 
 create table subscriptions
@@ -81,14 +83,20 @@ create table subscriptions
     foreign key (source_id) references sources (id)
 );
 
-select *
-from users;
-select *
-from sources
-order by type;
+create table notes
+(
+    id      integer primary key autoincrement,
+    user_id integer,
+    value   text,
+    foreign key (user_id) references users (id)
+);
 
-select *
-from schedules;
-
-select *
-from subscriptions;
+create table notify
+(
+    id          integer primary key autoincrement,
+    user_id     integer,
+    source_id   integer,
+    notify_time text,
+    foreign key (user_id) references users (id),
+    foreign key (source_id) references sources (id)
+);

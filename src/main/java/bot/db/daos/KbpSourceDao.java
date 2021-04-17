@@ -54,7 +54,6 @@ public class KbpSourceDao extends BaseDaoImpl<Source> implements SourceDao<Sourc
 
     private Source getSourceFromListByName(List<Source> sources, String sourceName) {
         for (Source source : sources) {
-            log.fatal(source.getValue());
             if (source.getValue().equals(sourceName)) {
                 return source;
             }

@@ -34,7 +34,6 @@ public class TelegramKbpScheduleBot extends ScheduleBot<TelegramUser, News, Sour
 
     private Calendar getDateCalendarForNotify(int hours) {
         Calendar calendar = new GregorianCalendar();
-        calendar.set(Calendar.DAY_OF_MONTH, 15);
         calendar.set(Calendar.HOUR_OF_DAY, hours);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -54,14 +53,16 @@ public class TelegramKbpScheduleBot extends ScheduleBot<TelegramUser, News, Sour
         int hours = 12;
         for (int i = 0; i < 3; i++) {
             Timer timer = new Timer();
+            Date firstDate = getDateCalendarForNotify(hours).getTime();
             NotifySender sender = new NotifySender();
             sender.setModel(getController().getModel());
             sender.setNotifyDao(notifyDao);
             sender.setNotifyTime(hours + ":00");
+            int period = 24 * 60 * 60 * 1000;
             timer.schedule(
                     sender,
-                    getDateCalendarForNotify(hours).getTime(),
-                    24 * 60 * 60 * 1000
+                    firstDate,
+                    period
             );
             hours += 3;
         }
