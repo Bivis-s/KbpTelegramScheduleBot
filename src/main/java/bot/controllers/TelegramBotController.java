@@ -122,6 +122,7 @@ public class TelegramBotController extends ScheduleBotController<TelegramUser, N
                 getModel().setNotifyToUser(user, user.getNotifyTime(), command);
                 break;
             default:
+                getModel().sendHelloMessageToView(user);
                 break;
         }
     }

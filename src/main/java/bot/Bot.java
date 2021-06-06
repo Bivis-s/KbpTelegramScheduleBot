@@ -2,7 +2,6 @@ package bot;
 
 import bot.db.objects.Note;
 import bot.db.objects.TelegramUser;
-import bot.secure.Values;
 import by.bivis.kbp.parser.objects.News;
 import by.bivis.kbp.parser.objects.Source;
 import by.bivis.kbp.parser.objects.schedule.Schedule;
@@ -20,12 +19,12 @@ public class Bot extends TelegramLongPollingBot {
 
     @Override
     public String getBotUsername() {
-        return Values.botName;
+        return System.getenv("KPB_TG_BOT_NAME");
     }
 
     @Override
     public String getBotToken() {
-        return Values.botApiToken;
+        return System.getenv("KPB_TG_BOT_TOKEN");
     }
 
     private TelegramUser getUser(Update update) {
